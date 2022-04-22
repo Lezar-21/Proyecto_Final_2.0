@@ -49,6 +49,10 @@ public class Articulo {
         }
 
     }
+    
+    public void dibujarArticuloAux(Graphics2D g2){
+    		
+    }
 	@Override
 	public String toString() {
 		return "Articulo [index=" + index+ "]";
