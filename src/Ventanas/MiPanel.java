@@ -56,9 +56,11 @@ public class MiPanel extends JPanel{
         //dibuja a los productores
         int abajo = 0;
         for(int i =0; contProduct>i;i++) {
-        	producList.get(i).dibujarProductor(g2, abajo);
         	if(producList.get(i).isDurmiendo()) {
+        		producList.get(i).dibujarProductor(g2, abajo);
         		producList.get(i).dibujarDormido(g2, abajo);
+        	}else if (producList.get(i).isActivo()) {
+        		producList.get(i).dibujarActivo(g2, abajo);
         	}
         	abajo += 165;
         }
@@ -66,9 +68,11 @@ public class MiPanel extends JPanel{
         //dibuja a los consumidores
         abajo = 0;
         for(int i =0; contConsum>i;i++) {
-        	consumList.get(i).dibujarConsumidor(g2,abajo);
         	if(consumList.get(i).isDurmiendo()) {
+        		consumList.get(i).dibujarConsumidor(g2,abajo);
         		consumList.get(i).dibujarDormido(g2, abajo);
+        	}else if(consumList.get(i).isActivo()) {
+        		consumList.get(i).dibujarActivo(g2, abajo);
         	}
         	abajo += 165;
         }

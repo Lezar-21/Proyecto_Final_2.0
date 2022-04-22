@@ -27,6 +27,7 @@ public class Monitor {
         cola.add(nuevoArticulo);
         
         paux.setDurmiendo(false);
+        paux.setActivo(true);
         //parte grafica
         mp.nuevoArticulo(nuevoArticulo);
         mp.repaint();
@@ -35,6 +36,7 @@ public class Monitor {
         //sirve para dar un espacio entre cada thread
 		Thread.sleep(TIME_SLEEP);
 		paux.setDurmiendo(true);
+		paux.setActivo(false);
         cont ++;
         notify();
     }
@@ -48,6 +50,7 @@ public class Monitor {
         Articulo eliminar = cola.pop();
         
         caux.setDurmiendo(false);
+        caux.setActivo(true);
         //elimina el articulo en el panel
         mp.quitarArticulo(eliminar);
         mp.repaint();
@@ -65,6 +68,7 @@ public class Monitor {
         }
         
         caux.setDurmiendo(true);
+        caux.setActivo(false);
         cont --;
         return eliminar;
     }

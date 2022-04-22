@@ -12,6 +12,7 @@ public class Consumidor extends Thread{
     int[] x = {662,630,690,706,617,635,55};
     int[] y = {83,142,180,100,68,71,39,44};
     boolean durmiendo = true;
+    boolean activo = false;
     MiPanel mp;
 
     public Consumidor(MiPanel mpx){
@@ -32,12 +33,34 @@ public class Consumidor extends Thread{
     }
     
     public void dibujarConsumidor(Graphics2D g2, int abajo){
-        
+
+        //torso
         g2.drawLine(x[0] , y[0] + abajo , x[0], y[1] + abajo );
+        //piernas
         g2.drawLine(x[0] ,y[1] + abajo , x[1], y[2] + abajo );
         g2.drawLine(x[0], y[1] + abajo , x[2], y[2] + abajo );
+        //brazos
         g2.drawLine(x[0], y[3] + abajo , x[3], y[4] + abajo );
         g2.drawLine(x[0], y[3] + abajo , x[4], y[5] + abajo );
+        //cabeza
+        g2.setColor(Color.BLACK); 
+        g2.fillOval(x[5],y[6] + abajo , x[6], y[7] );
+    }
+    
+    public void dibujarActivo(Graphics2D g2, int abajo){
+//    	int[] x = {662,630,690,706,617,635,55};
+//      int[] y = {83,142,180,100,68,71,39,44};
+        g2.drawLine(x[0] , y[0] + abajo , x[0], y[1] + abajo );
+        
+        g2.drawLine(x[0] ,y[1] + abajo , x[1], y[2] + abajo );
+        g2.drawLine(x[0], y[1] + abajo , x[2], y[2] + abajo );
+        
+        g2.drawLine(x[0], y[3] + abajo , 692, 94 + abajo );
+        g2.drawLine(692, 94 + abajo , 671, 129 + abajo );
+        
+        g2.drawLine(x[0], y[3] + abajo , 632, 94 + abajo );
+        g2.drawLine(632, 94 + abajo , 653, 129 + abajo );
+        
         g2.setColor(Color.BLACK); 
         g2.fillOval(x[5],y[6] + abajo , x[6], y[7] );
     }
@@ -76,6 +99,14 @@ public class Consumidor extends Thread{
     	this.durmiendo = dormido;
     }
     
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
 	@Override
 	public String toString() {
 		return "Consumidor [x=" + Arrays.toString(x) + ", y=" + Arrays.toString(y) + ", mp=" + mp
