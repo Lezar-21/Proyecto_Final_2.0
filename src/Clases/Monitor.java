@@ -6,7 +6,10 @@ import java.util.LinkedList;
 
 import Ventanas.MiPanel;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 public class Monitor {
     final int NUM_MAX = 10;
@@ -71,6 +74,46 @@ public class Monitor {
         caux.setActivo(false);
         cont --;
         return eliminar;
+    }
+    
+    public void dibujarMonitor(Graphics2D g2) {
+    	int x = 242, y=160, width = 54, height = 54,sumx=0, sumy=0;
+    	boolean abajo = false;
+    	float[] pattern = {10f,10f};
+    	Stroke stroke = new BasicStroke(10f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,1f,pattern,50f);
+    	g2.setColor(Color.RED);
+    	g2.setStroke(stroke);
+    	g2.drawRect(227, 140, 340, 250);
+    	g2.setStroke(new BasicStroke());
+    	g2.setColor(Color.GREEN);
+    	g2.fillRect(227, 140, 340, 250);
+    	g2.setColor(Color.BLACK);
+    	
+    	for(int i=0; i<NUM_MAX;i++) {
+    		
+    		g2.drawRect(x+sumx, y+sumy, width, height);
+    		
+    		if(i==4) {
+    			y += 160;
+    			abajo = true;
+    		}else if(i<4) {
+    			sumx += 63;
+    		}else if(i>4) {
+    			sumx -= 63;
+    		}
+    		
+    		if(abajo == false) {
+    			sumy += 53;
+    			abajo = true;
+    		}else {
+    			sumy -= 53;
+    			abajo = false;
+    		}
+    	}
+    }
+    
+    public int get_MAX() {
+    	return NUM_MAX;
     }
 
 }

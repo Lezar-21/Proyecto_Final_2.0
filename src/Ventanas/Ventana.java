@@ -23,17 +23,17 @@ public class Ventana extends JFrame {
 
         monitor = new Monitor(mp);
 
-        Consumidor c = new Consumidor(mp);
-        c.setName("consumidor 1");
-        iniciarThread(c);
-
-        mp.nuevoConsumidor(c);
-
-        Consumidor c1 = new Consumidor(mp);
-        c1.setName("consumidor 2");
-        iniciarThread(c1);
-        
-        mp.nuevoConsumidor(c1);
+//        Consumidor c = new Consumidor(mp);
+//        c.setName("consumidor 1");
+//        iniciarThread(c);
+//
+//        mp.nuevoConsumidor(c);
+//
+//        Consumidor c1 = new Consumidor(mp);
+//        c1.setName("consumidor 2");
+//        iniciarThread(c1);
+//        
+//        mp.nuevoConsumidor(c1);
 
         // mp.nuevoConsumidor(c1);
 

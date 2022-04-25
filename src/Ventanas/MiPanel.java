@@ -53,6 +53,8 @@ public class MiPanel extends JPanel{
         //int derecha = 530;
         //int abajo = 165;
         
+        Ventana.monitor.dibujarMonitor(g2);
+        
         //dibuja a los productores
         int abajo = 0;
         for(int i =0; contProduct>i;i++) {

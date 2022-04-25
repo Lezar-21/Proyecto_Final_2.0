@@ -1,6 +1,7 @@
 package Clases;
 
 import Ventanas.MiPanel;
+import Ventanas.Ventana;
 
 import java.awt.Graphics2D;
 
@@ -25,25 +26,25 @@ public class Articulo {
     public void dibujarArticulo(Graphics2D g2){
 
         switch(index){
-            case 0 : g2.fillOval(241, 160, 54, 54);
+            case 0 : g2.fillOval(242, 160, 54, 54);
             break;
             case 1 : g2.fillOval(305, 214, 54, 54);
             break;
-            case 2 : g2.fillOval(390, 160, 54, 54);
+            case 2 : g2.fillOval(368, 160, 54, 54);
             break;
-            case 3 : g2.fillOval(454, 214, 54, 54);
+            case 3 : g2.fillOval(431, 214, 54, 54);
             break;
-            case 4 : g2.fillOval(538, 160, 54, 54);
+            case 4 : g2.fillOval(494, 160, 54, 54);
             break;
-            case 5 : g2.fillOval(241, 256, 54, 54);
+            case 5 : g2.fillOval(242, 267, 54, 54);
             break;
-            case 6 : g2.fillOval(305, 310, 54, 54);
+            case 6 : g2.fillOval(305, 321, 54, 54);
             break;
-            case 7 : g2.fillOval(390, 256, 54, 54);
+            case 7 : g2.fillOval(368, 267, 54, 54);
             break;
-            case 8 : g2.fillOval(454, 310, 54, 54);
+            case 8 : g2.fillOval(431, 321, 54, 54);
             break;
-            case 9 : g2.fillOval(538, 256, 54, 54);
+            case 9 : g2.fillOval(494, 267, 54, 54);
             break;
             default : System.out.println("ERROR!!!!!!!!!!");
         }
