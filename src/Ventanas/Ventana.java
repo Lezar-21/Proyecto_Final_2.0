@@ -33,7 +33,8 @@ public class Ventana extends JFrame {
         System.out.println(this.iniciarProductor());
         System.out.println(this.iniciarProductor());
         System.out.println(this.iniciarProductor());
-
+        
+        System.out.println(this.iniciarConsumidor());
 //        b1 = new JButton();
 //        b1.addActionListener( new ActionListener(){
 //            public void actionPerformed(ActionEvent e){
@@ -87,10 +88,10 @@ public class Ventana extends JFrame {
     
     public int iniciarConsumidor(){
         if(consumCont<MAX_CONSUM){
-        	Productor p = new Productor(mp);
-        	p.setName("productor "+consumCont);
-        	iniciarThread(p);
-        	mp.nuevoProductor(p);
+        	Consumidor c = new Consumidor(mp);
+        	c.setName("Consumidor "+consumCont);
+        	iniciarThread(c);
+        	mp.nuevoConsumidor(c);
         	consumCont++;
         	return 1;
         }

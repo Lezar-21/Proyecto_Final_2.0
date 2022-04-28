@@ -45,7 +45,9 @@ public class MiPanel extends JPanel{
     }
     
     public void quitarArticulo(Articulo eliminar) {
-    	ArticList.remove(eliminar);
+    	//ArticList.remove(eliminar);
+    	int indexEliminar = ArticList.indexOf(eliminar);
+    	ArticList.get(indexEliminar);
     }
 
     public void paintComponent(Graphics g){
@@ -82,7 +84,7 @@ public class MiPanel extends JPanel{
         	abajo += 165;
         }
 
-        System.out.println("Tamano de arcticlist: "+ArticList.size());
+        //System.out.println("Tamano de arcticlist: "+ArticList.size());
         
         
         //dibuja los productos actualizados
@@ -90,6 +92,8 @@ public class MiPanel extends JPanel{
         for(Articulo a : ArticList){
         	if(a.isNuevo()) {
         		a.dibujarArticuloAux(g2,indexPA);
+        	}else if (a.isEliminado()){
+        		
         	}else {
         		a.dibujarArticulo(g2);
         	}
@@ -118,6 +122,9 @@ public class MiPanel extends JPanel{
     		if(a.isNuevo()) {
     			a.moverArticulo();
         	}
+    		if(a.isEliminado()) {
+    			a.moverArticulo();
+    		}
         }
     }
     

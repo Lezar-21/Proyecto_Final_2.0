@@ -10,12 +10,13 @@ public class Articulo {
     int x=158, y=0,xfinal=242, yfinal=160,  velX = 10, velY=10, tam = 54;    
     MiPanel mp;
     boolean nuevo = true;
-
+    boolean eliminado = false;
+    
     //prueba
     public Articulo(int index, MiPanel mp){
     	this.index = index;
     	this.mp = mp;
-    	this.setFinalCoordenades(index);
+    	this.setFinalCoordenades(index,true);
     }
     
     public int getIndex() {
@@ -26,7 +27,7 @@ public class Articulo {
 		this.index = index;
 	}
 	
-	private void setFinalCoordenades(int index) {
+	private void setFinalCoordenades(int index,boolean face) {
 //		switch(index){
 //	        case 0 :this.xfinal=242;this.yfinal=160;
 //	        break;
@@ -50,29 +51,34 @@ public class Articulo {
 //	        break;
 //	        default : System.out.println("ERROR!!!!!!!!!!");
 //	    }
-		int sumx=0, sumy=0, i=0;
-		boolean abajo = false;
-    	while(i<index && index!=0) {
-    		if(i==4) {
-    			sumy += 160;
-    			abajo = true;
-    		}else if(i<4) {
-    			sumx += 63;
-    		}else if(i>4) {
-    			sumx -= 63;
-    		}
-    		
-    		if(abajo == false) {
-    			sumy += 53;
-    			abajo = true;
-    		}else {
-    			sumy -= 53;
-    			abajo = false;
-    		}
-    		i++;
-    	}
-    	xfinal+=sumx;
-		yfinal+=sumy;
+		if(face==true) {
+			int sumx=0, sumy=0, i=0;
+			boolean abajo = false;
+	    	while(i<index && index!=0) {
+	    		if(i==4) {
+	    			sumy += 160;
+	    			abajo = true;
+	    		}else if(i<4) {
+	    			sumx += 63;
+	    		}else if(i>4) {
+	    			sumx -= 63;
+	    		}
+	    		
+	    		if(abajo == false) {
+	    			sumy += 53;
+	    			abajo = true;
+	    		}else {
+	    			sumy -= 53;
+	    			abajo = false;
+	    		}
+	    		i++;
+	    	}
+	    	xfinal+=sumx;
+			yfinal+=sumy;
+		}
+		if(face==false) {
+			
+		}
 	}
 	
     public void dibujarArticulo(Graphics2D g2){
@@ -91,16 +97,19 @@ public class Articulo {
     	g2.fillOval(x,y,tam,tam);
     }
     public void moverArticulo() {
-    	
-    	if(x + velX<=xfinal) {
+    	boolean band = true;
+    	if(x + velX<xfinal) {
     		x = x + velX;
      	}else {
      		velX=0;
      	}
-    	if(y + velY<=yfinal) {
+    	
+    	if(y + velY<=yfinal&&x<xfinal) {
     		y = y + velY;
-     	}else {
-     		velY=0;
+     	}else if(y+ velY > yfinal || y<=yfinal) {
+    		y = y-velY;
+    	}else {
+    		y=0;
      	}
     	
     	//if (x + velX < 0) velX = velX * -1;
@@ -119,6 +128,14 @@ public class Articulo {
 
 	public void setNuevo(boolean nuevo) {
 		this.nuevo = nuevo;
+	}
+
+	public boolean isEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(boolean eliminado) {
+		this.eliminado = eliminado;
 	}
 
 	@Override

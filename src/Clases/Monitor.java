@@ -69,7 +69,7 @@ public class Monitor {
         
         //sirve para dar un espacio entre cada thread
       	Thread.sleep(TIME_SLEEP);
-      		        
+      	
         //se actualizan los indices
         int i = 0;
         for(Articulo a : cola) {
