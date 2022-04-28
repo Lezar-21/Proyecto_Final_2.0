@@ -16,6 +16,7 @@ public class Monitor {
     final int TIME_SLEEP = 5000;
     public LinkedList<Articulo> cola = new LinkedList<>();
     public int cont = 0; 
+    //private boolean productoEliminado = false;
     
     MiPanel mp;
     public Monitor(MiPanel mpx){
@@ -26,18 +27,23 @@ public class Monitor {
         while(cont == NUM_MAX){
             wait();
         }
-        Articulo nuevoArticulo = new Articulo(cont);
-        cola.add(nuevoArticulo);
+        Articulo nuevoArticulo = new Articulo(cont,mp);
         
         paux.setDurmiendo(false);
         paux.setActivo(true);
         //parte grafica
         mp.nuevoArticulo(nuevoArticulo);
         mp.repaint();
+        
+        
         System.out.println("Productor: "+Thread.currentThread().getName()+" produce en "+ cont);
         
         //sirve para dar un espacio entre cada thread
 		Thread.sleep(TIME_SLEEP);
+		
+		nuevoArticulo.setNuevo(false);
+        cola.add(nuevoArticulo);
+        
 		paux.setDurmiendo(true);
 		paux.setActivo(false);
         cont ++;
@@ -56,6 +62,7 @@ public class Monitor {
         caux.setActivo(true);
         //elimina el articulo en el panel
         mp.quitarArticulo(eliminar);
+        //productoEliminado = true;
         mp.repaint();
         
         System.out.println("El consumidor: "+Thread.currentThread().getName()+" consume "+eliminar.index);

@@ -8,51 +8,32 @@ import Clases.Monitor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class Ventana extends JFrame {
 	public static Monitor monitor;
-    MiPanel mp;
+    private MiPanel mp;
+    private final int MAX_PRODUC = 3;
+    private int produCont = 0;
+    private final int MAX_CONSUM = 3;
+    private int consumCont = 0;
+    
     JButton b1;
     public Ventana(String titulo){
         super(titulo);
         this.setBounds(10,10,800,600);
-
+        
         mp = new MiPanel(this);
         this.add(mp);
 
         monitor = new Monitor(mp);
 
-//        Consumidor c = new Consumidor(mp);
-//        c.setName("consumidor 1");
-//        iniciarThread(c);
-//
-//        mp.nuevoConsumidor(c);
-//
-//        Consumidor c1 = new Consumidor(mp);
-//        c1.setName("consumidor 2");
-//        iniciarThread(c1);
-//        
-//        mp.nuevoConsumidor(c1);
+        System.out.println(this.iniciarProductor());
+        System.out.println(this.iniciarProductor());
+        System.out.println(this.iniciarProductor());
+        System.out.println(this.iniciarProductor());
 
-        // mp.nuevoConsumidor(c1);
-
-        // Consumidor c1 = new Consumidor(mp);
-        // c1.setName("consumidor 2");
-        // mp.startThreat(c1);
-
-        Productor p = new Productor(mp);
-        p.setName("productor 1");
-        iniciarThread(p);
-
-        mp.nuevoProductor(p);
-        
-        Productor p1 = new Productor(mp);
-        p1.setName("productor 2");
-        iniciarThread(p1);
-
-        mp.nuevoProductor(p1);
-        
 //        b1 = new JButton();
 //        b1.addActionListener( new ActionListener(){
 //            public void actionPerformed(ActionEvent e){
@@ -60,29 +41,20 @@ public class Ventana extends JFrame {
 //            }
 //        });
 //        this.add(b1);
-        
-        // Productor p2 = new Productor(mp);
-        // p2.setName("productor 1");
-        // iniciarThread(p2);
-
-        // mp.nuevoProductor(p2);
-
-        // Productor p1 = new Productor(mp);
-        // p1.setName("productor 2");
-        // mp.startThreat(p1); 
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        /*
+       
         while(true){
+        	mp.moverPelota();
             mp.repaint();
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (Exception e) {
                 //TODO: handle exception
             }
-        }*/
+        }
     }
 
     //este metodo usa generics para poder funcionar tanto con productores como con consumidores
@@ -99,5 +71,29 @@ public class Ventana extends JFrame {
         }catch(InterruptedException e) {
         
         }
+    }
+    
+    public int iniciarProductor(){
+        if(produCont<MAX_PRODUC){
+        	Productor p = new Productor(mp);
+        	p.setName("productor "+produCont);
+        	iniciarThread(p);
+        	mp.nuevoProductor(p);
+        	produCont++;
+        	return 1;
+        }
+        return 0;
+    }
+    
+    public int iniciarConsumidor(){
+        if(consumCont<MAX_CONSUM){
+        	Productor p = new Productor(mp);
+        	p.setName("productor "+consumCont);
+        	iniciarThread(p);
+        	mp.nuevoProductor(p);
+        	consumCont++;
+        	return 1;
+        }
+        return 0;
     }
 }

@@ -7,53 +7,120 @@ import java.awt.Graphics2D;
 
 public class Articulo {
     int index;
-    int x = 0, y = 0,  velX, velY, tam;    
+    int x=158, y=0,xfinal=242, yfinal=160,  velX = 10, velY=10, tam = 54;    
     MiPanel mp;
+    boolean nuevo = true;
 
     //prueba
-    public Articulo(int index){
+    public Articulo(int index, MiPanel mp){
     	this.index = index;
+    	this.mp = mp;
+    	this.setFinalCoordenades(index);
     }
+    
     public int getIndex() {
 		return index;
 	}
+    
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	public Articulo(){
-    }
-
+	
+	private void setFinalCoordenades(int index) {
+//		switch(index){
+//	        case 0 :this.xfinal=242;this.yfinal=160;
+//	        break;
+//	        case 1 :this.xfinal=305;this.yfinal=214;
+//	        break;
+//	        case 2 :this.xfinal=368;this.yfinal=160;
+//	        break;
+//	        case 3 :this.xfinal=431;this.yfinal=214;
+//	        break;
+//	        case 4 :this.xfinal=494;this.yfinal=160;
+//	        break;
+//	        case 5 :this.xfinal=242;this.yfinal=267;
+//	        break;
+//	        case 6 :this.xfinal=305;this.yfinal=321;
+//	        break;
+//	        case 7 :this.xfinal=368;this.yfinal=267;
+//	        break;
+//	        case 8 :this.xfinal=431;this.yfinal=321;
+//	        break;
+//	        case 9 :this.xfinal=494;this.yfinal=267;
+//	        break;
+//	        default : System.out.println("ERROR!!!!!!!!!!");
+//	    }
+		int sumx=0, sumy=0, i=0;
+		boolean abajo = false;
+    	while(i<index && index!=0) {
+    		if(i==4) {
+    			sumy += 160;
+    			abajo = true;
+    		}else if(i<4) {
+    			sumx += 63;
+    		}else if(i>4) {
+    			sumx -= 63;
+    		}
+    		
+    		if(abajo == false) {
+    			sumy += 53;
+    			abajo = true;
+    		}else {
+    			sumy -= 53;
+    			abajo = false;
+    		}
+    		i++;
+    	}
+    	xfinal+=sumx;
+		yfinal+=sumy;
+	}
+	
     public void dibujarArticulo(Graphics2D g2){
-
-        switch(index){
-            case 0 : g2.fillOval(242, 160, 54, 54);
-            break;
-            case 1 : g2.fillOval(305, 214, 54, 54);
-            break;
-            case 2 : g2.fillOval(368, 160, 54, 54);
-            break;
-            case 3 : g2.fillOval(431, 214, 54, 54);
-            break;
-            case 4 : g2.fillOval(494, 160, 54, 54);
-            break;
-            case 5 : g2.fillOval(242, 267, 54, 54);
-            break;
-            case 6 : g2.fillOval(305, 321, 54, 54);
-            break;
-            case 7 : g2.fillOval(368, 267, 54, 54);
-            break;
-            case 8 : g2.fillOval(431, 321, 54, 54);
-            break;
-            case 9 : g2.fillOval(494, 267, 54, 54);
-            break;
-            default : System.out.println("ERROR!!!!!!!!!!");
-        }
-
+    	g2.fillOval(xfinal, yfinal, tam, tam);
     }
     
-    public void dibujarArticuloAux(Graphics2D g2){
-    		
+    public void dibujarArticuloAux(Graphics2D g2,int indexProductor){
+    	if(y<50) {
+	    	int i = 0, sumy =50;
+	    	while(indexProductor>i) {
+	    		sumy += 165;
+	    		i++;
+	    	}
+	    	y=sumy;
+    	}
+    	g2.fillOval(x,y,tam,tam);
     }
+    public void moverArticulo() {
+    	
+    	if(x + velX<=xfinal) {
+    		x = x + velX;
+     	}else {
+     		velX=0;
+     	}
+    	if(y + velY<=yfinal) {
+    		y = y + velY;
+     	}else {
+     		velY=0;
+     	}
+    	
+    	//if (x + velX < 0) velX = velX * -1;
+        //if (x + velX >= xfinal) velX = 0;
+        //if (y + velY < 0) velY = velY * -1;
+//        if (y + velY >= yfinal) velY = 0;
+//        if(x + velX<xfinal) x = x + velX;
+//        if(y + velY<yfinal)y = y + velY;
+//        
+    }
+    
+    
+	public boolean isNuevo() {
+		return nuevo;
+	}
+
+	public void setNuevo(boolean nuevo) {
+		this.nuevo = nuevo;
+	}
+
 	@Override
 	public String toString() {
 		return "Articulo [index=" + index+ "]";

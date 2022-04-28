@@ -14,12 +14,14 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 public class MiPanel extends JPanel{
-    Ventana v;
-    int contProduct = 0;
-    ArrayList<Productor> producList = new ArrayList<>();
-    int contConsum = 0;
-    ArrayList<Consumidor> consumList = new ArrayList<>();
-    int contArtic = 0;
+    private Ventana v;
+    private int contProduct = 0;
+    private int indexPA;
+    private ArrayList<Productor> producList = new ArrayList<>();
+    private int contConsum = 0;
+    private int indexCA;
+    private ArrayList<Consumidor> consumList = new ArrayList<>();
+    private int contArtic = 0;
     public ArrayList<Articulo> ArticList = new ArrayList<>();
 
     public MiPanel(Ventana vx){
@@ -63,6 +65,7 @@ public class MiPanel extends JPanel{
         		producList.get(i).dibujarDormido(g2, abajo);
         	}else if (producList.get(i).isActivo()) {
         		producList.get(i).dibujarActivo(g2, abajo);
+        		indexPA = i;
         	}
         	abajo += 165;
         }
@@ -81,9 +84,17 @@ public class MiPanel extends JPanel{
 
         System.out.println("Tamano de arcticlist: "+ArticList.size());
         
+        
         //dibuja los productos actualizados
+        int i=0;
         for(Articulo a : ArticList){
-            a.dibujarArticulo(g2);
+        	if(a.isNuevo()) {
+        		a.dibujarArticuloAux(g2,indexPA);
+        	}else {
+        		a.dibujarArticulo(g2);
+        	}
+        		a.setIndex(i);
+        		i++;
         }
 
         /*productos de arriba
@@ -100,6 +111,14 @@ public class MiPanel extends JPanel{
         g2.fillOval(454, 310, 54, 54);
         g2.fillOval(538, 256, 54, 54);
         */
+    }
+    
+    public void moverPelota() {
+    	for(Articulo a : ArticList){
+    		if(a.isNuevo()) {
+    			a.moverArticulo();
+        	}
+        }
     }
     
 }
