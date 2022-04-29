@@ -35,6 +35,8 @@ public class Ventana extends JFrame {
         System.out.println(this.iniciarProductor());
         
         System.out.println(this.iniciarConsumidor());
+        System.out.println(this.iniciarConsumidor());
+        System.out.println(this.iniciarConsumidor());
 //        b1 = new JButton();
 //        b1.addActionListener( new ActionListener(){
 //            public void actionPerformed(ActionEvent e){

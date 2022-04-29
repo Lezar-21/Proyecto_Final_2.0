@@ -23,7 +23,7 @@ public class MiPanel extends JPanel{
     private ArrayList<Consumidor> consumList = new ArrayList<>();
     private int contArtic = 0;
     public ArrayList<Articulo> ArticList = new ArrayList<>();
-
+    int eliminados=0;
     public MiPanel(Ventana vx){
         this.v=vx;
         this.setFocusable(true);    
@@ -41,13 +41,20 @@ public class MiPanel extends JPanel{
 
     public void nuevoArticulo(Articulo t){
         ArticList.add(t);
+        System.out.println("index: "+t.getIndex());
+        eliminados --;
         contArtic ++;
     }
     
     public void quitarArticulo(Articulo eliminar) {
-    	//ArticList.remove(eliminar);
     	int indexEliminar = ArticList.indexOf(eliminar);
-    	ArticList.get(indexEliminar);
+    	ArticList.get(indexEliminar).setEliminado(true);
+    	ArticList.get(indexEliminar).setFinalCoordenades(indexEliminar,indexCA);
+    }
+    
+    public void eliminarArticulo(Articulo eliminar) {
+    	ArticList.remove(eliminar);
+    	eliminados ++;
     }
 
     public void paintComponent(Graphics g){
@@ -80,6 +87,7 @@ public class MiPanel extends JPanel{
         		consumList.get(i).dibujarDormido(g2, abajo);
         	}else if(consumList.get(i).isActivo()) {
         		consumList.get(i).dibujarActivo(g2, abajo);
+        		indexCA = i;
         	}
         	abajo += 165;
         }
@@ -88,17 +96,13 @@ public class MiPanel extends JPanel{
         
         
         //dibuja los productos actualizados
-        int i=0;
+
         for(Articulo a : ArticList){
         	if(a.isNuevo()) {
         		a.dibujarArticuloAux(g2,indexPA);
-        	}else if (a.isEliminado()){
-        		
         	}else {
         		a.dibujarArticulo(g2);
         	}
-        		a.setIndex(i);
-        		i++;
         }
 
         /*productos de arriba
@@ -119,12 +123,10 @@ public class MiPanel extends JPanel{
     
     public void moverPelota() {
     	for(Articulo a : ArticList){
-    		if(a.isNuevo()) {
+    		if(a.isNuevo() || a.isEliminado()) {
     			a.moverArticulo();
         	}
-    		if(a.isEliminado()) {
-    			a.moverArticulo();
-    		}
+    		
         }
     }
     

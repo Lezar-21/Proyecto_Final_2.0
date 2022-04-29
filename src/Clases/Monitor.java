@@ -14,8 +14,10 @@ import java.awt.Stroke;
 public class Monitor {
     final int NUM_MAX = 10;
     final int TIME_SLEEP = 5000;
-    public LinkedList<Articulo> cola = new LinkedList<>();
-    public int cont = 0; 
+    public volatile LinkedList<Articulo> cola = new LinkedList<>();
+    public volatile int cont = 0; 
+    public volatile int eliminados = 0;
+    public volatile int agregados = 0;
     //private boolean productoEliminado = false;
     
     MiPanel mp;
@@ -27,26 +29,33 @@ public class Monitor {
         while(cont == NUM_MAX){
             wait();
         }
-        Articulo nuevoArticulo = new Articulo(cont,mp);
-        
+        Articulo nuevoArticulo=null;
+        System.out.println(eliminados);
+        if(eliminados>0) {
+        	nuevoArticulo = new Articulo(eliminados-1,mp);
+        	eliminados --;
+        }else if(eliminados==0){
+        	nuevoArticulo = new Articulo(cont,mp);
+        	agregados++;
+        }
+        cola.addLast(nuevoArticulo);
+        cont ++;
         paux.setDurmiendo(false);
         paux.setActivo(true);
         //parte grafica
         mp.nuevoArticulo(nuevoArticulo);
         mp.repaint();
         
-        
-        System.out.println("Productor: "+Thread.currentThread().getName()+" produce en "+ cont);
+        System.out.println("Productor: "+Thread.currentThread().getName()+" produce en "+ nuevoArticulo.getIndex());
         
         //sirve para dar un espacio entre cada thread
 		Thread.sleep(TIME_SLEEP);
 		
 		nuevoArticulo.setNuevo(false);
-        cola.add(nuevoArticulo);
-        
+
 		paux.setDurmiendo(true);
 		paux.setActivo(false);
-        cont ++;
+        
         notify();
     }
 
@@ -56,27 +65,38 @@ public class Monitor {
         while(cont <= 0){
             wait();
         }
-        Articulo eliminar = cola.pop();
+        System.out.println("primero: "+cola.getFirst().getIndex());
+        Articulo eliminar = null;
+        if(agregados>0) {
+        	eliminar = cola.removeFirst();
+        	agregados--;
+        }else {
+        	eliminar = cola.removeLast();
+        	eliminados ++;
+        }
         
+        
+        System.out.println(eliminados);
         caux.setDurmiendo(false);
         caux.setActivo(true);
         //elimina el articulo en el panel
         mp.quitarArticulo(eliminar);
         //productoEliminado = true;
         mp.repaint();
+//        int i = 0;
+//        for(Articulo a : cola) {
+//         	a.setIndex(i);
+//        	i++;
+//        }
         
         System.out.println("El consumidor: "+Thread.currentThread().getName()+" consume "+eliminar.index);
         
         //sirve para dar un espacio entre cada thread
       	Thread.sleep(TIME_SLEEP);
       	
-        //se actualizan los indices
-        int i = 0;
-        for(Articulo a : cola) {
-        	a.setIndex(i);
-        	i++;
-        }
-        
+      	
+      	mp.eliminarArticulo(eliminar);
+
         caux.setDurmiendo(true);
         caux.setActivo(false);
         cont --;
